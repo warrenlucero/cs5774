@@ -1,0 +1,1208 @@
+/* ==========================================================================
+   MT6D Monitor - Main Stylesheet
+   CS 5774 Project 2: High-Fidelity Prototype
+   Author: Warren Lucero
+
+   Table of contents
+     1. Design tokens (custom properties)
+     2. Base and inherited styles
+     3. Accessibility helpers
+     4. Site header and primary navigation
+     5. Page layout (main, grids, panels)
+     6. Stat cards
+     7. Figures and flexible media
+     8. Data tables and status badges
+     9. Forms and buttons
+    10. Page-specific components (detail, landing)
+    11. Site footer
+    12. Responsive rules (media queries)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. Design tokens
+   Colors and spacing are defined once so every rule below stays consistent.
+   ========================================================================== */
+:root {
+  /* Brand and surface colors */
+  --color-navy: #13233a;
+  --color-navy-light: #1f3a5c;
+  --color-accent: #0b6e99;
+  --color-accent-dark: #08506f;
+  --color-bg: #f3f5f8;
+  --color-surface: #ffffff;
+  --color-border: #d4dae3;
+  --color-text: #1b2430;
+  --color-muted: #5a6677;
+
+  /* Status colors (all meet 4.5:1 contrast against their tint backgrounds) */
+  --color-new: #0b5cad;
+  --color-new-bg: #e3effb;
+  --color-investigating: #8a4b00;
+  --color-investigating-bg: #fdf0dc;
+  --color-confirmed: #a61b1b;
+  --color-confirmed-bg: #fbe4e4;
+  --color-false: #4b5563;
+  --color-false-bg: #eceef1;
+  --color-ok: #1d6b3a;
+  --color-ok-bg: #e2f3e8;
+
+  /* Typography: two font families, one for prose and one for technical data */
+  --font-sans: "Source Sans 3", "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+
+  /* Spacing scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(19, 35, 58, 0.08);
+  --max-width: 75rem;
+}
+
+
+/* ==========================================================================
+   2. Base and inherited styles
+   Font family, size, and color are set once on <body>; every descendant
+   inherits them unless a more specific rule overrides the value.
+   ========================================================================== */
+
+/* Box model: include padding and border in declared widths everywhere */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%; /* respects the user's browser font-size setting */
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--space-sm);
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+
+h1 {
+  font-size: 1.875rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+}
+
+p {
+  margin: 0 0 var(--space-md);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+a:hover,
+a:focus {
+  color: var(--color-accent-dark);
+}
+
+/* Technical identifiers (alert IDs, IPv6 addresses) use the monospace family */
+code,
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+
+/* ==========================================================================
+   3. Accessibility helpers
+   ========================================================================== */
+
+/* Hides text visually while keeping it available to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: off-screen until it receives keyboard focus */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: var(--space-md);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface);
+  color: var(--color-navy);
+  font-weight: 700;
+  border-radius: var(--radius);
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}
+
+/* Visible focus ring for keyboard users on every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #f2a900;
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   4. Site header and primary navigation
+   ========================================================================== */
+.site-header {
+  position: sticky; /* header stays visible while scrolling long tables */
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-navy);
+  color: #ffffff; /* inherited by the brand text and nav links below */
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: inherit;
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand img {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.brand:hover,
+.brand:focus {
+  color: #ffffff;
+}
+
+/* Navigation list is a block-level <ul>; its items are laid out in a row */
+.primary-nav ul {
+  display: flex;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Links are inline by default; display:block gives them a full click area */
+.primary-nav a {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  color: #d6e2f0;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.primary-nav a:hover,
+.primary-nav a:focus {
+  color: #ffffff;
+  border-bottom-color: #6fb3d6;
+}
+
+/* Chained attribute selector marks the current page for users and AT */
+.primary-nav a[aria-current="page"] {
+  color: #ffffff;
+  border-bottom-color: #f2a900;
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-left: auto; /* pushes search and account to the right edge */
+}
+
+.site-search {
+  display: flex;
+}
+
+.site-search input {
+  width: 14rem;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-navy-light);
+  border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.site-search button {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid #6fb3d6;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background-color: var(--color-navy-light);
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Account badge: circular avatar with the analyst's initials */
+.account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: #d6e2f0;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.account .avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid #6fb3d6;
+  border-radius: 50%;
+  background-color: var(--color-navy-light);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.account:hover,
+.account:focus {
+  color: #ffffff;
+}
+
+
+/* ==========================================================================
+   5. Page layout
+   Fluid layout: widths are percentages or fr units capped by --max-width.
+   ========================================================================== */
+main {
+  display: block;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md) var(--space-xl);
+}
+
+/* Title row: page heading on the left, primary action on the right */
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.page-head h1 {
+  margin: 0;
+}
+
+.page-head p {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-muted);
+}
+
+/* Panel: the shared white card container used on every page */
+.panel {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.panel-head h2 {
+  margin: 0;
+}
+
+.panel-link {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Two-column grid used on the detail page */
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* Breadcrumb trail */
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+/* Adjacent sibling selector draws a separator before every item but the first */
+.breadcrumb li + li::before {
+  content: "/";
+  margin: 0 var(--space-sm);
+  color: var(--color-muted);
+}
+
+
+/* ==========================================================================
+   6. Stat cards
+   ========================================================================== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-md);
+  margin: 0 0 var(--space-lg);
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 5px solid var(--color-accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.stat-label {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  display: block;
+  color: var(--color-navy);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Modifier classes override only the accent border color */
+.stat--alert {
+  border-left-color: var(--color-confirmed);
+}
+
+.stat--ok {
+  border-left-color: var(--color-ok);
+}
+
+
+/* ==========================================================================
+   7. Figures and flexible media
+   Images scale down with their container and never overflow it.
+   ========================================================================== */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 0;
+}
+
+.chart img {
+  display: block; /* removes the inline baseline gap under images */
+  width: 100%;
+}
+
+figcaption {
+  margin-top: var(--space-sm);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+
+/* ==========================================================================
+   8. Data tables and status badges
+   Every row in every alert table uses identical markup so Project 3 can
+   render them from a single JavaScript template.
+   ========================================================================== */
+.table-wrap {
+  position: relative; /* contains absolutely positioned screen-reader text */
+  overflow-x: auto;   /* wide tables scroll inside their panel on small screens */
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.data-table caption {
+  text-align: left;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table thead th {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f7f9fc;
+}
+
+.data-table tbody tr:last-child td,
+.data-table tbody tr:last-child th {
+  border-bottom: 0;
+}
+
+/* Numeric columns align right so values line up by place value */
+.data-table .num {
+  text-align: right;
+}
+
+.data-table .alert-id {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* Status badge: one class for all badges; the data-status attribute selects
+   the color, so the markup stays identical and only the content changes. */
+.status {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status[data-status="new"] {
+  color: var(--color-new);
+  background-color: var(--color-new-bg);
+}
+
+.status[data-status="investigating"] {
+  color: var(--color-investigating);
+  background-color: var(--color-investigating-bg);
+}
+
+.status[data-status="confirmed-positive"] {
+  color: var(--color-confirmed);
+  background-color: var(--color-confirmed-bg);
+}
+
+.status[data-status="false-positive"] {
+  color: var(--color-false);
+  background-color: var(--color-false-bg);
+}
+
+/* Severity text uses the same attribute-selector pattern */
+.severity {
+  font-weight: 600;
+}
+
+.severity[data-severity="high"] {
+  color: var(--color-confirmed);
+}
+
+.severity[data-severity="medium"] {
+  color: var(--color-investigating);
+}
+
+.severity[data-severity="low"] {
+  color: var(--color-muted);
+}
+
+/* Pagination */
+.pagination ul {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pagination a,
+.pagination span {
+  display: block;
+  min-width: 2.5rem;
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: center;
+  text-decoration: none;
+}
+
+.pagination a[aria-current="page"] {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+  color: #ffffff;
+}
+
+.pagination .disabled {
+  color: var(--color-muted);
+  border-style: dashed;
+}
+
+
+/* ==========================================================================
+   9. Forms and buttons
+   ========================================================================== */
+
+/* Form controls do not inherit font by default; this override fixes that */
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+.field {
+  margin-bottom: var(--space-md);
+}
+
+.field label,
+.field legend {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-weight: 600;
+}
+
+/* Override: checkbox labels sit inline beside their box instead of above it */
+.field .inline-label {
+  display: inline;
+  margin-left: var(--space-xs);
+  font-weight: 400;
+}
+
+.field input[type="checkbox"] {
+  width: 1.1rem;
+  height: 1.1rem;
+  vertical-align: middle;
+  accent-color: var(--color-accent);
+}
+
+.field-hint {
+  display: block;
+  margin-top: var(--space-xs);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.field input[type="text"],
+.field input[type="number"],
+.field input[type="search"],
+.field input[type="email"],
+.field input[type="password"],
+.field select,
+.field textarea {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid #9aa6b6;
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.field textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.required {
+  color: var(--color-confirmed);
+}
+
+/* Filter bar on the list page: search box grows, selects stay compact */
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2.5fr) repeat(3, minmax(0, 1fr)) auto;
+  gap: var(--space-md);
+  align-items: end;
+}
+
+.filters .field {
+  margin-bottom: 0;
+}
+
+/* Buttons: base style plus variants */
+.btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  border: 2px solid var(--color-navy);
+  border-radius: var(--radius);
+  background-color: var(--color-surface);
+  color: var(--color-navy);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #e8edf4;
+  color: var(--color-navy);
+}
+
+.btn--primary {
+  background-color: var(--color-navy);
+  color: #ffffff;
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+  background-color: var(--color-navy-light);
+  color: #ffffff;
+}
+
+.btn--danger {
+  border-color: var(--color-confirmed);
+  background-color: var(--color-confirmed);
+  color: #ffffff;
+}
+
+.btn--danger:hover,
+.btn--danger:focus {
+  background-color: #7f1414;
+  color: #ffffff;
+}
+
+/* Disabled buttons (e.g. Save before required fields are filled). This rule
+   comes after the variants so it overrides their hover and focus colors. */
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:focus {
+  border-color: #b8c0cc;
+  background-color: #e4e8ee;
+  color: #5a6677;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  margin-top: var(--space-md);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+
+/* ==========================================================================
+   10. Page-specific components
+   ========================================================================== */
+
+/* ----- Detail page: alert summary as a description list ----- */
+.summary-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-sm) var(--space-lg);
+  margin: 0;
+}
+
+.summary-list dt {
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.summary-list dd {
+  margin: 0;
+}
+
+.alert-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Analyst note history: a list of note cards, newest first */
+.note-list {
+  margin: 0 0 var(--space-lg);
+  padding: 0;
+  list-style: none;
+}
+
+.analyst-note {
+  margin-bottom: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: #f7f9fc;
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius);
+}
+
+.analyst-note p {
+  margin: 0;
+}
+
+.analyst-note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-sm);
+  margin-bottom: var(--space-xs);
+  font-size: 0.875rem;
+}
+
+.analyst-note-author {
+  font-weight: 700;
+}
+
+.analyst-note-role {
+  color: var(--color-muted);
+}
+
+/* The timestamp is pushed to the right edge of the note header */
+.analyst-note-meta time {
+  margin-left: auto;
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+}
+
+.related-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related-list li {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.related-list li:last-child {
+  border-bottom: 0;
+}
+
+.address-table td {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Adjacent sibling selector targets the two address columns only, letting
+   long IPv6 addresses wrap while the time column stays on one line. */
+.address-table td + td {
+  white-space: normal;
+  word-break: break-all;
+}
+
+/* ----- Landing page (logged out) ----- */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-lg);
+}
+
+.hero img {
+  flex: 0 0 auto;
+  width: 15rem;
+}
+
+.hero p {
+  max-width: 45rem;
+  color: var(--color-muted);
+}
+
+.landing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+/* Activity bars: the width of each bar comes from a --value custom property
+   set on the element, since the value is data rather than presentation. */
+.activity-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.activity-list li {
+  margin-bottom: var(--space-md);
+}
+
+.activity-label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.bar {
+  display: block; /* the bar is a <span>, which is inline by default */
+  position: relative;
+  height: 0.75rem;
+  margin-top: var(--space-xs);
+  overflow: hidden;
+  background-color: #e6ebf1;
+  border-radius: 999px;
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--value, 0%);
+  height: 100%;
+  background-color: var(--color-accent);
+  border-radius: 999px;
+}
+
+/* Report-a-problem radio group laid out as a two-column grid of pills */
+.issue-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm) var(--space-md);
+  margin: 0 0 var(--space-md);
+  padding: 0;
+  border: 0;
+}
+
+.issue-options legend {
+  margin-bottom: var(--space-sm);
+  padding: 0;
+  font-weight: 600;
+}
+
+.issue-options label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.issue-options input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  accent-color: var(--color-accent);
+}
+
+/* Small muted helper text used on several pages */
+.note {
+  margin: var(--space-sm) 0 0;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+
+/* ==========================================================================
+   11. Site footer
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-md);
+}
+
+.footer-inner p {
+  margin: 0;
+}
+
+.footer-nav ul {
+  display: flex;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-nav a {
+  color: var(--color-muted);
+}
+
+
+/* ==========================================================================
+   12. Responsive rules
+   Breakpoints: tablet (< 1024px) and mobile (< 768px).
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .site-search input {
+    width: 10rem;
+  }
+
+  .filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Search box and button each take a full row on tablet */
+  .filters .filter-query {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Header stacks: brand and account on top, nav and search below */
+  .header-inner {
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .primary-nav {
+    order: 3;
+    width: 100%;
+  }
+
+  .primary-nav ul {
+    justify-content: space-between;
+  }
+
+  .primary-nav a {
+    padding: var(--space-sm);
+  }
+
+  .header-tools {
+    order: 2;
+  }
+
+  /* Global search is hidden on phones; the Alerts page search bar
+     provides the same function with more room. */
+  .header-tools .site-search {
+    display: none;
+  }
+
+  .account-name {
+    display: none; /* keep only the avatar on narrow screens */
+  }
+
+  main {
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+  }
+
+  .panel {
+    padding: var(--space-md);
+  }
+
+  /* Four stat cards become a 2 x 2 grid */
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .stat {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  /* Multi-column layouts collapse to a single column */
+  .two-col,
+  .landing-grid,
+  .field-row,
+  .filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filters .filter-query {
+    grid-column: auto;
+  }
+
+  .issue-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Lower-priority table columns are hidden to avoid horizontal scrolling */
+  .data-table .col-optional {
+    display: none;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: var(--space-sm);
+  }
+
+  /* Smaller monospace text lets all three address columns fit on a phone */
+  .address-table th,
+  .address-table td {
+    padding: var(--space-xs);
+    font-size: 0.72rem;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero {
+    gap: var(--space-md);
+  }
+
+  .hero img {
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn,
+  .page-head .btn {
+    width: 100%;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ==========================================================================
+   13. Project 3 behavior styles
+   Styles for elements that app.js adds or reveals.
+   ========================================================================== */
+
+/* Confirmation message added under the page heading by the status actions */
+.action-message {
+  margin: 0 0 var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 5px solid var(--color-ok);
+  border-radius: var(--radius);
+  background-color: var(--color-ok-bg);
+  color: var(--color-ok);
+  font-weight: 600;
+}
+
+/* Rows and notes added by JavaScript fade from a highlight to normal */
+@keyframes highlight-new {
+  from { background-color: #fff3c4; }
+  to   { background-color: transparent; }
+}
+
+.address-table tr.is-new td {
+  animation: highlight-new 3s ease-out;
+}
+
+.analyst-note.is-new {
+  border-left-color: var(--color-ok);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .address-table tr.is-new td {
+    animation: none;
+  }
+}
+
+/* Search page: "search again" form sits on one row on wider screens */
+.search-again {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-md);
+}
+
+.search-again .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Friendly "no results" message */
+.empty-state {
+  border-left: 5px solid var(--color-accent);
+}
+
+.empty-state ul {
+  margin: 0;
+  padding-left: var(--space-lg);
+}
+
+#search-summary {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+@media (max-width: 767px) {
+  .search-again {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

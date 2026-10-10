@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+  detail.html - Alert Details (detail page)
+  CS 5774 Project 3: Interactive Prototype
+  Author: Warren Lucero
+  Purpose: Full record for a single alert: summary, traffic signature,
+           MT6D address-mutation history, analyst notes, and status actions.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Details, traffic signature, and address-mutation history for MT6D alert 1042 on PLC-07.">
+  <title>Alert #1042 on PLC-07 | MT6D Monitor</title>
+  <!-- Fonts: Source Sans 3 and IBM Plex Mono from Google Fonts (fonts.google.com), SIL Open Font License -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Site header: brand, primary navigation, search, account ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="home.html">
+        <!-- Image: original logo created for this project (images/logo.svg) -->
+        <img src="images/logo.svg" alt="" width="36" height="36">
+        MT6D Monitor
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="home.html">Home</a></li>
+          <li><a href="list.html" aria-current="page">Alerts</a></li>
+          <li><a href="add.html">Add Alert</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <form class="site-search" action="search.html" method="get" role="search" aria-label="Site search">
+          <label class="visually-hidden" for="site-search">Search devices and alerts</label>
+          <input type="search" id="site-search" name="q" placeholder="Search alerts, e.g. PLC-07">
+          <button type="submit">Search</button>
+        </form>
+        <a class="account" href="index.html">
+          <span class="avatar" aria-hidden="true">WL</span>
+          <span class="account-name">W. Lucero<br>Log out</span>
+          <span class="visually-hidden">(signed in as Warren Lucero, select to log out)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main content ===== -->
+  <main id="main">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="list.html">Alerts</a></li>
+        <li><a href="detail.html?id=1042" aria-current="page">Alert #1042</a></li>
+      </ol>
+    </nav>
+
+    <div class="page-head">
+      <h1>Alert <span class="mono">#1042</span>: PLC-07</h1>
+
+      <!-- Status actions. app.js listens for clicks on this container (event
+           delegation) and reads each button's data-action to decide what to do. -->
+      <form class="alert-actions" action="detail.html" method="get">
+        <input type="hidden" name="id" value="1042">
+        <button class="btn" type="submit" name="action" value="false-positive" data-action="false-positive">Mark False Positive</button>
+        <button class="btn" type="submit" name="action" value="confirmed-positive" data-action="confirmed-positive">Mark Confirmed Positive</button>
+        <button class="btn btn--danger" type="submit" name="action" value="reassign" data-action="reassign">Reassign IP Address</button>
+      </form>
+    </div>
+
+    <div class="two-col">
+      <!-- Left column: evidence -->
+      <div>
+        <section class="panel" aria-labelledby="summary-heading">
+          <h2 id="summary-heading">Summary</h2>
+          <dl class="summary-list">
+            <dt>Device</dt>
+            <dd>PLC-07 (Programmable Logic Controller, Line 2 packaging)</dd>
+            <dt>Detected</dt>
+            <dd><time datetime="2026-09-24T13:59-04:00">Today at 13:59, 3 minutes ago</time></dd>
+            <dt>Confidence</dt>
+            <dd>89%</dd>
+            <dt>Severity</dt>
+            <dd><span class="severity" data-severity="high">High</span></dd>
+            <dt>Pattern</dt>
+            <dd>Scanning / reconnaissance signature</dd>
+            <dt>Status</dt>
+            <dd><span class="status" id="alert-status" data-status="new">New</span></dd>
+          </dl>
+        </section>
+
+        <section class="panel" aria-labelledby="signature-heading">
+          <h2 id="signature-heading">Traffic Signature</h2>
+          <figure class="chart">
+            <!-- Image: original chart created for this project (images/signature-1042.svg) -->
+            <img src="images/signature-1042.svg" width="560" height="250"
+                 alt="Line chart from 13:50 to 14:00 comparing observed traffic entropy with the seven-day baseline. Observed entropy climbs from about 0.42 to a peak of 0.72, while the baseline stays between 0.31 and 0.46.">
+            <figcaption>Observed entropy ran well above the seven-day baseline for ten minutes before the alert fired.</figcaption>
+          </figure>
+        </section>
+
+        <section class="panel" aria-labelledby="mutation-heading">
+          <h2 id="mutation-heading">Address-Mutation History</h2>
+          <div class="table-wrap">
+            <table class="data-table address-table">
+              <caption class="visually-hidden">MT6D IPv6 address changes for PLC-07, newest first</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Time</th>
+                  <th scope="col">Previous address</th>
+                  <th scope="col">New address</th>
+                </tr>
+              </thead>
+              <tbody id="mutation-rows">
+                <tr>
+                  <td><time datetime="2026-09-24T14:02:11-04:00">14:02:11</time></td>
+                  <td>2001:db8:85a3::1c4e:7e00:9a2f:6fa</td>
+                  <td>2001:db8:85a3::5d21:c0a8:3b17:733</td>
+                </tr>
+                <tr>
+                  <td><time datetime="2026-09-24T11:58:11-04:00">11:58:11</time></td>
+                  <td>2001:db8:85a3::c410:77ab:e2d9:12</td>
+                  <td>2001:db8:85a3::1c4e:7e00:9a2f:6fa</td>
+                </tr>
+                <tr>
+                  <td><time datetime="2026-09-24T09:54:11-04:00">09:54:11</time></td>
+                  <td>2001:db8:85a3::8f02:4b6e:a1c3:5fd</td>
+                  <td>2001:db8:85a3::c410:77ab:e2d9:12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right column: analyst work -->
+      <div>
+        <section class="panel" aria-labelledby="notes-heading">
+          <h2 id="notes-heading">Analyst Notes</h2>
+
+          <!-- Previous notes from other analysts, newest first. Every note uses
+               identical markup so Project 3 can render them from one template. -->
+          <h3 id="history-heading">Previous notes (2)</h3>
+          <ol class="note-list" aria-labelledby="history-heading">
+            <li>
+              <div class="analyst-note">
+                <header class="analyst-note-meta">
+                  <span class="analyst-note-author">J. Ramirez</span>
+                  <span class="analyst-note-role">Control Room Operator</span>
+                  <time datetime="2026-09-24T14:01-04:00">14:01</time>
+                </header>
+                <p>Line 2 was running normally at 13:59. No maintenance or firmware work is scheduled on PLC-07 today, so this traffic did not come from our team.</p>
+              </div>
+            </li>
+            <li>
+              <div class="analyst-note">
+                <header class="analyst-note-meta">
+                  <span class="analyst-note-author">A. Chen</span>
+                  <span class="analyst-note-role">OT Security Analyst</span>
+                  <time datetime="2026-09-24T14:00-04:00">14:00</time>
+                </header>
+                <p>Source is an engineering workstation on VLAN 30 sending Modbus read requests across the full register range at even intervals. This looks like enumeration, not normal HMI polling. Checking whether anyone was using that workstation.</p>
+              </div>
+            </li>
+          </ol>
+
+          <form id="note-form" action="detail.html" method="get" data-guard>
+            <input type="hidden" name="id" value="1042">
+            <div class="field">
+              <label for="note">Add an investigation note</label>
+              <textarea id="note" name="note" rows="5" required aria-describedby="note-hint"
+                        placeholder="What did you observe, and what did you check?"></textarea>
+            </div>
+            <p class="note form-hint" id="note-hint">Save Note becomes available once you type a note.</p>
+            <div class="form-actions">
+              <button class="btn btn--primary" type="submit" aria-describedby="note-hint">Save Note</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="related-heading">
+          <h2 id="related-heading">Related Alerts on PLC-07</h2>
+          <ul class="related-list">
+            <li>
+              <a href="detail.html?id=1035">#1035</a>, 5 hr ago,
+              <span class="status" data-status="confirmed-positive">Confirmed Positive</span>
+            </li>
+            <li>
+              <a href="detail.html?id=1021">#1021</a>, 2 days ago,
+              <span class="status" data-status="false-positive">False Positive</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 MT6D Monitor. Research prototype, Virginia Tech.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#report">Help</a></li>
+          <li><a href="mailto:soc@example.org">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <!-- Behavior: jQuery 3.7.1 (local copy, MIT license, jquery.com) and the site script -->
+  <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

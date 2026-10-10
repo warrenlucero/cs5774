@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--
+  index.html - Operational Overview (logged out)
+  CS 5774 Project 3: Interactive Prototype
+  Author: Warren Lucero
+  Purpose: Public landing page. Shows read-only operational status, lets an
+           analyst log in, and lets anyone report a problem.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Operational overview of the MT6D-protected SCADA network, analyst login, and problem reporting.">
+  <title>Operational Overview | MT6D Monitor</title>
+  <!-- Fonts: Source Sans 3 and IBM Plex Mono from Google Fonts (fonts.google.com), SIL Open Font License -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Site header: logged-out variant with in-page navigation ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <!-- Image: original logo created for this project (images/logo.svg) -->
+        <img src="images/logo.svg" alt="" width="36" height="36">
+        MT6D Monitor
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" aria-current="page">Overview</a></li>
+          <li><a href="#activity">Activity</a></li>
+          <li><a href="#report">Report a Problem</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <a class="account" href="#login">
+          <span class="avatar" aria-hidden="true">?</span>
+          <span class="account-name">Logged out<br>Log in</span>
+          <span class="visually-hidden">(not signed in, select to log in)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main content ===== -->
+  <main id="main">
+    <section class="hero" id="about" aria-labelledby="page-title">
+      <!-- Image: original illustration created for this project (images/scada-network.svg) -->
+      <img src="images/scada-network.svg" width="240" height="160"
+           alt="Diagram of an MT6D gateway linked to an HMI, a PLC, and an RTU, with dashed arrows showing rotating IPv6 addresses.">
+      <div>
+        <h1 id="page-title">Operational Overview</h1>
+        <p>MT6D Monitor watches the Plant A SCADA network, where Moving Target IPv6 Defense rotates every device address to frustrate reconnaissance. A machine-learning model scores traffic timing, volume, and entropy at each HMI and PLC. Log in to investigate alerts and trigger address reassignments.</p>
+      </div>
+    </section>
+
+    <!-- Read-only status metrics -->
+    <section aria-labelledby="status-heading">
+      <h2 id="status-heading" class="visually-hidden">Network status summary</h2>
+      <ul class="stats">
+        <li class="stat stat--alert">
+          <span class="stat-label">Active alerts</span>
+          <span class="stat-value">12</span>
+        </li>
+        <li class="stat">
+          <span class="stat-label">Devices online</span>
+          <span class="stat-value">40/48</span>
+        </li>
+        <li class="stat stat--ok">
+          <span class="stat-label">Network status</span>
+          <span class="stat-value">Normal</span>
+        </li>
+        <li class="stat">
+          <span class="stat-label">Last scan</span>
+          <span class="stat-value">2 min ago</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="landing-grid">
+      <!-- Activity counts. Bar width comes from an inline custom property
+           because each value is data, not a reusable style. -->
+      <section class="panel" id="activity" aria-labelledby="activity-heading">
+        <h2 id="activity-heading">Today's Activity by Type</h2>
+        <ul class="activity-list">
+          <li>
+            <span class="activity-label"><span>Alerts</span><span>12</span></span>
+            <span class="bar" style="--value: 100%" aria-hidden="true"></span>
+          </li>
+          <li>
+            <span class="activity-label"><span>Status changes</span><span>9</span></span>
+            <span class="bar" style="--value: 75%" aria-hidden="true"></span>
+          </li>
+          <li>
+            <span class="activity-label"><span>Address reassignments</span><span>6</span></span>
+            <span class="bar" style="--value: 50%" aria-hidden="true"></span>
+          </li>
+          <li>
+            <span class="activity-label"><span>Notes added</span><span>4</span></span>
+            <span class="bar" style="--value: 33%" aria-hidden="true"></span>
+          </li>
+          <li>
+            <span class="activity-label"><span>Device events</span><span>3</span></span>
+            <span class="bar" style="--value: 25%" aria-hidden="true"></span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Analyst login -->
+      <section class="panel" id="login" aria-labelledby="login-heading">
+        <h2 id="login-heading">Analyst Log In</h2>
+        <form action="home.html" method="get">
+          <div class="field">
+            <label for="username">VT username</label>
+            <input type="text" id="username" name="username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required>
+          </div>
+          <div class="field">
+            <input type="checkbox" id="remember" name="remember" value="yes">
+            <label for="remember" class="inline-label">Keep me signed in on this device</label>
+          </div>
+          <button class="btn btn--primary" type="submit">Log In</button>
+          <p class="note">Access is limited to authorized control room and security staff.</p>
+        </form>
+      </section>
+    </div>
+
+    <!-- Problem report -->
+    <section class="panel" id="report" aria-labelledby="report-heading">
+      <h2 id="report-heading">Report a Problem</h2>
+      <!-- All fields are required; app.js keeps Submit Report
+           disabled until every one is filled in. -->
+      <form action="index.html" method="get" data-guard>
+        <p class="note">All fields are required.</p>
+        <fieldset class="issue-options">
+          <legend>Which area is affected? <span class="required" aria-hidden="true">*</span></legend>
+          <label><input type="radio" name="issue" value="app" required> App</label>
+          <label><input type="radio" name="issue" value="device" required> Device</label>
+          <label><input type="radio" name="issue" value="configuration" required> Configuration</label>
+          <label><input type="radio" name="issue" value="login" required> Log in</label>
+          <label><input type="radio" name="issue" value="data" required> Data</label>
+          <label><input type="radio" name="issue" value="offline" required> Offline</label>
+        </fieldset>
+        <div class="field-row">
+          <div class="field">
+            <label for="report-email">Your email <span class="required" aria-hidden="true">*</span></label>
+            <input type="email" id="report-email" name="email" autocomplete="email" required
+                   placeholder="name@vt.edu">
+          </div>
+          <div class="field">
+            <label for="report-device">Device name <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="report-device" name="device" required
+                   placeholder="e.g. PLC-07" aria-describedby="report-device-hint">
+            <span class="field-hint" id="report-device-hint">Type &ldquo;Unknown&rdquo; if you are not sure.</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="report-details">What happened? <span class="required" aria-hidden="true">*</span></label>
+          <textarea id="report-details" name="details" rows="4" required></textarea>
+        </div>
+        <p class="note form-hint" id="report-hint">Submit Report becomes available once every field is filled in.</p>
+        <div class="form-actions">
+          <button class="btn btn--primary" type="submit" aria-describedby="report-hint">Submit Report</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 MT6D Monitor. Research prototype, Virginia Tech.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#report">Help</a></li>
+          <li><a href="mailto:soc@example.org">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <!-- Behavior: jQuery 3.7.1 (local copy, MIT license, jquery.com) and the site script -->
+  <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

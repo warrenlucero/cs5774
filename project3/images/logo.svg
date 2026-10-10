@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Original logo created by Warren Lucero for this project: a shield with
+       three linked nodes and a rotation arrow representing moving addresses. -->
+  <title>MT6D Monitor logo</title>
+  <path d="M32 4 L56 13 V31 C56 45 46 55 32 60 C18 55 8 45 8 31 V13 Z" fill="#1f3a5c" stroke="#6fb3d6" stroke-width="3"/>
+  <path d="M20 40 A14 14 0 1 1 44 40" fill="none" stroke="#f2a900" stroke-width="3" stroke-linecap="round"/>
+  <path d="M44 40 L45 32 M44 40 L37 37" stroke="#f2a900" stroke-width="3" stroke-linecap="round"/>
+  <line x1="24" y1="30" x2="32" y2="22" stroke="#ffffff" stroke-width="2"/>
+  <line x1="32" y1="22" x2="40" y2="30" stroke="#ffffff" stroke-width="2"/>
+  <line x1="24" y1="30" x2="40" y2="30" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="32" cy="22" r="4" fill="#ffffff"/>
+  <circle cx="24" cy="30" r="4" fill="#ffffff"/>
+  <circle cx="40" cy="30" r="4" fill="#ffffff"/>
+</svg>

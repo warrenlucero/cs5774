@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 250" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<!-- Original graphic created by Warren Lucero for this project. Data is illustrative. -->
+<title>Traffic signature for alert 1042: entropy versus baseline</title>
+<rect width="560" height="250" fill="#ffffff"/>
+<line x1="48" y1="196.0" x2="544" y2="196.0" stroke="#e1e6ed"/>
+<text x="40" y="200.0" font-size="12" fill="#5a6677" text-anchor="end">0.00</text>
+<line x1="48" y1="151.0" x2="544" y2="151.0" stroke="#e1e6ed"/>
+<text x="40" y="155.0" font-size="12" fill="#5a6677" text-anchor="end">0.25</text>
+<line x1="48" y1="106.0" x2="544" y2="106.0" stroke="#e1e6ed"/>
+<text x="40" y="110.0" font-size="12" fill="#5a6677" text-anchor="end">0.50</text>
+<line x1="48" y1="61.0" x2="544" y2="61.0" stroke="#e1e6ed"/>
+<text x="40" y="65.0" font-size="12" fill="#5a6677" text-anchor="end">0.75</text>
+<line x1="48" y1="16.0" x2="544" y2="16.0" stroke="#e1e6ed"/>
+<text x="40" y="20.0" font-size="12" fill="#5a6677" text-anchor="end">1.00</text>
+<text x="48.0" y="214" font-size="12" fill="#5a6677" text-anchor="start">13:50</text>
+<text x="296.0" y="214" font-size="12" fill="#5a6677" text-anchor="middle">13:55</text>
+<text x="544.0" y="214" font-size="12" fill="#5a6677" text-anchor="end">14:00</text>
+<polyline points="48.0,140.2 89.3,140.2 130.7,138.4 172.0,134.8 213.3,131.2 254.7,129.4 296.0,133.0 337.3,134.8 378.7,125.8 420.0,122.2 461.3,122.2 502.7,124.0 544.0,113.2" fill="none" stroke="#8a94a3" stroke-width="2.5" stroke-dasharray="7 5"/>
+<polyline points="48.0,120.4 89.3,115.0 130.7,116.8 172.0,122.2 213.3,97.0 254.7,84.4 296.0,91.6 337.3,77.2 378.7,80.8 420.0,86.2 461.3,73.6 502.7,66.4 544.0,93.4" fill="none" stroke="#0b6e99" stroke-width="3"/>
+<line x1="48" y1="232" x2="76" y2="232" stroke="#0b6e99" stroke-width="3"/><text x="82" y="236" font-size="13" fill="#1b2430">Observed entropy</text>
+<line x1="218" y1="232" x2="246" y2="232" stroke="#8a94a3" stroke-width="2.5" stroke-dasharray="7 5"/><text x="252" y="236" font-size="13" fill="#1b2430">7-day baseline</text>
+</svg>

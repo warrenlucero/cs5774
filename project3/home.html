@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--
+  home.html - Dashboard Overview (logged in)
+  CS 5774 Project 3: Interactive Prototype
+  Author: Warren Lucero
+  Purpose: Shows analysts the overall network health, traffic volume,
+           and the five most recent anomaly alerts.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dashboard overview of SCADA network health and recent MT6D anomaly alerts.">
+  <title>Dashboard Overview | MT6D Monitor</title>
+  <!-- Fonts: Source Sans 3 and IBM Plex Mono from Google Fonts (fonts.google.com), SIL Open Font License -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="images/logo.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Site header: brand, primary navigation, search, account ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="home.html">
+        <!-- Image: original logo created for this project (images/logo.svg) -->
+        <img src="images/logo.svg" alt="" width="36" height="36">
+        MT6D Monitor
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="home.html" aria-current="page">Home</a></li>
+          <li><a href="list.html">Alerts</a></li>
+          <li><a href="add.html">Add Alert</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <form class="site-search" action="search.html" method="get" role="search" aria-label="Site search">
+          <label class="visually-hidden" for="site-search">Search devices and alerts</label>
+          <input type="search" id="site-search" name="q" placeholder="Search alerts, e.g. PLC-07">
+          <button type="submit">Search</button>
+        </form>
+        <a class="account" href="index.html">
+          <span class="avatar" aria-hidden="true">WL</span>
+          <span class="account-name">W. Lucero<br>Log out</span>
+          <span class="visually-hidden">(signed in as Warren Lucero, select to log out)</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Main content ===== -->
+  <main id="main">
+    <div class="page-head">
+      <div>
+        <h1>Dashboard Overview</h1>
+        <p>Plant A SCADA network. Updated <time datetime="2026-09-24T14:02-04:00">14:02 EDT, September 24, 2026</time>.</p>
+      </div>
+      <a class="btn btn--primary" href="add.html">+ New Alert</a>
+    </div>
+
+    <!-- Key status metrics -->
+    <section aria-labelledby="status-heading">
+      <h2 id="status-heading" class="visually-hidden">Network status summary</h2>
+      <ul class="stats">
+        <li class="stat stat--alert">
+          <span class="stat-label">Active alerts</span>
+          <span class="stat-value">12</span>
+        </li>
+        <li class="stat">
+          <span class="stat-label">Devices monitored</span>
+          <span class="stat-value">48</span>
+        </li>
+        <li class="stat stat--ok">
+          <span class="stat-label">Network status</span>
+          <span class="stat-value">Normal</span>
+        </li>
+        <li class="stat">
+          <span class="stat-label">Last scan</span>
+          <span class="stat-value">2 min ago</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Traffic volume chart -->
+    <section class="panel" aria-labelledby="traffic-heading">
+      <div class="panel-head">
+        <h2 id="traffic-heading">Traffic Volume: Last 12 Hours</h2>
+      </div>
+      <figure class="chart">
+        <!-- Image: original chart created for this project (images/traffic-volume-12h.svg) -->
+        <img src="images/traffic-volume-12h.svg" width="720" height="270"
+             alt="Bar chart of packets per hour from 01:00 to 12:00. Volume ranges from 15 thousand at 07:00 to 76 thousand at 11:00. The 06:00 and 11:00 hours exceed the 70 thousand packet baseline threshold.">
+        <figcaption>Two hourly peaks (06:00 and 11:00) exceeded the baseline and were reviewed by the detection model.</figcaption>
+      </figure>
+    </section>
+
+    <!-- Recent alerts: rows share one template for Project 3 rendering -->
+    <section class="panel" aria-labelledby="recent-heading">
+      <div class="panel-head">
+        <h2 id="recent-heading">Recent Alerts</h2>
+        <a class="panel-link" href="list.html">View all alerts &rarr;</a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <caption class="visually-hidden">Five most recent anomaly alerts</caption>
+          <thead>
+            <tr>
+              <th scope="col">Alert ID</th>
+              <th scope="col">Device</th>
+              <th scope="col" class="col-optional">Pattern</th>
+              <th scope="col">Detected</th>
+              <th scope="col" class="num">Confidence</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="alert-id"><a href="detail.html?id=1042">#1042</a></th>
+              <td>PLC-07</td>
+              <td class="col-optional">Scanning / reconnaissance</td>
+              <td><time datetime="2026-09-24T13:59-04:00">3 min ago</time></td>
+              <td class="num">89%</td>
+              <td><span class="status" data-status="new">New</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="alert-id"><a href="detail.html?id=1041">#1041</a></th>
+              <td>HMI-03</td>
+              <td class="col-optional">Traffic profiling</td>
+              <td><time datetime="2026-09-24T13:42-04:00">20 min ago</time></td>
+              <td class="num">61%</td>
+              <td><span class="status" data-status="investigating">Investigating</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="alert-id"><a href="detail.html?id=1040">#1040</a></th>
+              <td>RTU-05</td>
+              <td class="col-optional">Address correlation attempt</td>
+              <td><time datetime="2026-09-24T13:20-04:00">42 min ago</time></td>
+              <td class="num">72%</td>
+              <td><span class="status" data-status="investigating">Investigating</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="alert-id"><a href="detail.html?id=1039">#1039</a></th>
+              <td>PLC-12</td>
+              <td class="col-optional">Scanning / reconnaissance</td>
+              <td><time datetime="2026-09-24T13:02-04:00">1 hr ago</time></td>
+              <td class="num">91%</td>
+              <td><span class="status" data-status="new">New</span></td>
+            </tr>
+            <tr>
+              <th scope="row" class="alert-id"><a href="detail.html?id=1037">#1037</a></th>
+              <td>RTU-02</td>
+              <td class="col-optional">Volume spike</td>
+              <td><time datetime="2026-09-24T11:02-04:00">3 hr ago</time></td>
+              <td class="num">45%</td>
+              <td><span class="status" data-status="false-positive">False Positive</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Site footer ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 MT6D Monitor. Research prototype, Virginia Tech.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#report">Help</a></li>
+          <li><a href="mailto:soc@example.org">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <!-- Behavior: jQuery 3.7.1 (local copy, MIT license, jquery.com) and the site script -->
+  <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<!-- Original graphic created by Warren Lucero for this project. Data is illustrative. -->
+<title>Traffic volume, last 12 hours</title>
+<rect width="720" height="270" fill="#ffffff"/>
+<line x1="56" y1="220.0" x2="710" y2="220.0" stroke="#e1e6ed" stroke-width="1"/>
+<text x="48" y="224.0" font-size="12" fill="#5a6677" text-anchor="end">0k</text>
+<line x1="56" y1="170.0" x2="710" y2="170.0" stroke="#e1e6ed" stroke-width="1"/>
+<text x="48" y="174.0" font-size="12" fill="#5a6677" text-anchor="end">20k</text>
+<line x1="56" y1="120.0" x2="710" y2="120.0" stroke="#e1e6ed" stroke-width="1"/>
+<text x="48" y="124.0" font-size="12" fill="#5a6677" text-anchor="end">40k</text>
+<line x1="56" y1="70.0" x2="710" y2="70.0" stroke="#e1e6ed" stroke-width="1"/>
+<text x="48" y="74.0" font-size="12" fill="#5a6677" text-anchor="end">60k</text>
+<line x1="56" y1="20.0" x2="710" y2="20.0" stroke="#e1e6ed" stroke-width="1"/>
+<text x="48" y="24.0" font-size="12" fill="#5a6677" text-anchor="end">80k</text>
+<rect x="64.2" y="140.0" width="38" height="80.0" rx="3" fill="#0b6e99"/>
+<text x="83.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">01:00</text>
+<rect x="118.8" y="100.0" width="38" height="120.0" rx="3" fill="#0b6e99"/>
+<text x="137.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">02:00</text>
+<rect x="173.2" y="120.0" width="38" height="100.0" rx="3" fill="#0b6e99"/>
+<text x="192.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">03:00</text>
+<rect x="227.8" y="65.0" width="38" height="155.0" rx="3" fill="#0b6e99"/>
+<text x="246.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">04:00</text>
+<rect x="282.2" y="102.5" width="38" height="117.5" rx="3" fill="#0b6e99"/>
+<text x="301.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">05:00</text>
+<rect x="336.8" y="32.5" width="38" height="187.5" rx="3" fill="#a61b1b"/>
+<text x="355.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">06:00</text>
+<rect x="391.2" y="182.5" width="38" height="37.5" rx="3" fill="#0b6e99"/>
+<text x="410.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">07:00</text>
+<rect x="445.8" y="157.5" width="38" height="62.5" rx="3" fill="#0b6e99"/>
+<text x="464.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">08:00</text>
+<rect x="500.2" y="75.0" width="38" height="145.0" rx="3" fill="#0b6e99"/>
+<text x="519.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">09:00</text>
+<rect x="554.8" y="117.5" width="38" height="102.5" rx="3" fill="#0b6e99"/>
+<text x="573.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">10:00</text>
+<rect x="609.2" y="30.0" width="38" height="190.0" rx="3" fill="#a61b1b"/>
+<text x="628.2" y="240" font-size="12" fill="#5a6677" text-anchor="middle">11:00</text>
+<rect x="663.8" y="60.0" width="38" height="160.0" rx="3" fill="#0b6e99"/>
+<text x="682.8" y="240" font-size="12" fill="#5a6677" text-anchor="middle">12:00</text>
+<line x1="56" y1="220" x2="710" y2="220" stroke="#9aa6b6"/>
+<text x="56" y="262" font-size="12" fill="#5a6677">Packets per hour (thousands). Red bars exceed the 70k baseline threshold.</text>
+</svg>
